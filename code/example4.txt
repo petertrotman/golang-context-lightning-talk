@@ -1,0 +1,20 @@
+func UserNameMiddleware(h http.HandlerFunc) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        ctx := r.Context()
+        if cookie, _ = r.Cookie("username"); cookie != nil {
+            ctx = context.WithValue(ctx, "Username", cookie.Value)
+        }
+        r = r.WithContext(r)
+        h(r, w)
+    }
+}
+
+func InfoPage(w http.ResponseWriter, r *http.Request) {
+    if username, ok := r.Context().Value("Username"); ok {
+        w.WriteHeader(http.StatusOK)
+        w.Write([]byte("Hello " + username.(string) + "!\n"))
+    } else {
+        w.WriteHeader(http.StatusNotFound)
+        w.Write([]byte("Not logged in\n"))
+    }
+}

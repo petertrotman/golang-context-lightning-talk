@@ -1,0 +1,18 @@
+// Explicitly applying context middleware to HandlerFuncs
+func main() {
+    mux := http.NewServeMux()
+    mux.HandleFunc("/login", Login)
+    mux.HandleFunc("/status", UserNameMiddleware(StatusPage))
+    mux.HandleFunc("/info", UserNameMiddleware(InfoPage))
+    log.Fatal(http.ListenAndServe(":8080", mux)
+}
+
+// This has the same effect but is only called once
+func main() {
+    mux := http.NewServeMux()
+    mux.HandleFunc("/login", Login)
+    mux.HandleFunc("/status", StatusPage)
+    mux.HandleFunc("/info", InfoPage)
+
+    log.Fatal(http.ListenAndServe(":8080", UserNameMiddleware(mux))
+}

@@ -1,0 +1,27 @@
+func main() {
+    ...
+    mux.HandleFunc("/status", UserNameMiddleware(StatusPage))
+    mux.HandleFunc("/info", UserNameMiddleware(InfoPage))
+    ...
+}
+
+func UserNameMiddleware(f func(string) http.HandlerFunc) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        if cookie, _ = r.Cookie("username"); cookie != nil {
+            f(cookie.Value)(w, r)
+        } else {
+            f(nil)(w, r)
+        }
+    }
+}
+
+func StatusPage(username string) {
+    return func(w http.ResponseWriter, r *http.Request) {
+        if username != nil {
+            w.Write([]byte("Logged in\n"))
+        } else {
+            w.Write([]byte("Not logged in\n"))
+        }
+        w.WriteHeader(http.StatusOK)
+    }
+}

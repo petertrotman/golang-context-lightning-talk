@@ -1,0 +1,8 @@
+func main() {
+    mux := http.NewServeMux()
+    mux.HandleFunc("/login", Login)
+    mux.HandleFunc("/status", StatusPage)
+    mux.HandleFunc("/info", InfoPage)
+    log.Fatal(http.ListenAndServe(":8080", UserNameMiddleware(mux))
+}
+

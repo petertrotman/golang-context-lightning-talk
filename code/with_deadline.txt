@@ -1,1 +1,0 @@
-func WithDeadline(parent Context, deadline time.Time) (Context, CancelFunc)

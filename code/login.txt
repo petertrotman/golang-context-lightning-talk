@@ -1,3 +1,0 @@
-func login(w http.ResponseWriter, r *http.Request) {
-        templates.ExecuteTemplate(w, "login", nil)
-}

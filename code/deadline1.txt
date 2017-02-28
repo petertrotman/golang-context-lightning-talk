@@ -1,6 +1,0 @@
-func someHandler() {
-        ctx, cancel := context.WithDeadline(context.Background(), time.)
-        go doStuff(ctx)
-        // ...some work happens...
-        cancel()
-}

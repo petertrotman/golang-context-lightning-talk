@@ -1,1 +1,0 @@
-func WithCancel(parent Context) (ctx Context, cancel CancelFunc)
