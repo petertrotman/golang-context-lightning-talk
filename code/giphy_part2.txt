@@ -1,0 +1,16 @@
+func getGiphy(ctx context.Context, path string, params map[string]interface{}) (*http.Response, error) {
+        var requestUrl string
+
+        if params != nil {
+                queryParams := url.Values{}
+                for k, v := range params {
+                        queryParams.Add(k, v.(string))
+                }
+                requestUrl = path + "?" + queryParams.Encode()
+        } else {
+                requestUrl = path
+        }
+
+        client := http.Client{}
+        return ctxhttp.Get(ctx, &client, requestUrl) // HL
+}

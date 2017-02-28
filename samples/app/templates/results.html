@@ -1,0 +1,46 @@
+{{ define "results" }}
+
+        {{ template "header" .}}
+
+        {{ template "nav" . }}
+
+        <div class="container">
+            <div class="row">
+                <h5>Results For: {{ .question }}</h5>
+                <div class="row">
+                    <div class="col-md-12">
+                    <form role="form" class="form-horizontal" action="/search" method="POST">
+                        <div class="input-group form-search">
+                          <input type="text" name="input" class="form-control search-query" placeholder="Ask me another">
+                          <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary" data-type="last">Submit</button>
+                          </span>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-2">
+                    {{ if .gif }}
+                        <img src="{{ .gif }}" style="width:170px; height: 150px;">
+                    {{ else }}
+                        <img src="/public/img/golang_gopher.svg" style="width:80px;">
+                    {{ end }}
+                </div>
+                <div class="col-md-10">
+                    <ul class="list-group">
+                        {{ range .results }}
+                            <li class="list-group-item">{{ . }}</li>
+                        {{ end }}
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        {{ template "footer" .}}
+
+{{ end }}

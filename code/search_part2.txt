@@ -1,0 +1,23 @@
+// create a context with a hard deadline for returning something
+ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second) // HL
+
+type resultAndError struct {
+        results []string
+        err     error
+}
+
+// ask duckduckgo for an answer
+answerChan := make(chan resultAndError)
+go func() {
+        value, err := lookup.DuckduckQuery(ctx, qry) // HL
+        answerChan <- resultAndError{value, err}
+}()
+
+// ask giphy for a gif
+sessionCtx := session.NewContext(ctx, s) // HL
+gifChan := make(chan resultAndError)
+go func() {
+        terms := strings.Split(qry, " ")
+        url, err := lookup.GifForTerms(sessionCtx, terms, giphyKey) // HL
+        gifChan <- resultAndError{[]string{url}, err}
+}()
